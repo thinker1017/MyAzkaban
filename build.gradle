@@ -115,6 +115,7 @@ project(':azkaban-common') {
   }
 }
 
+/*
 project(':azkaban-migration') {
   configurations {
     all {
@@ -154,6 +155,7 @@ project(':azkaban-migration') {
       'copyPackage']) {
   }
 }
+*/
 
 project(':azkaban-webserver') {
   apply plugin: 'lesscss'
@@ -338,6 +340,7 @@ project(':azkaban-execserver') {
   }
 }
 
+/*
 project(':azkaban-soloserver') {
   dependencies {
     compile(project(':azkaban-common'))
@@ -385,6 +388,7 @@ project(':azkaban-soloserver') {
       'copySql']) {
   }
 }
+*/
 
 project(':azkaban-sql') {
   task concat() << {
@@ -477,12 +481,12 @@ project(':azkaban-test') {
 }
 
 distributions {
-  migration {
-    baseName = 'azkaban-migration'
-    contents {
-      from { project(':azkaban-migration').file('build/package') }
-    }
-  }
+//  migration {
+//    baseName = 'azkaban-migration'
+//    contents {
+//      from { project(':azkaban-migration').file('build/package') }
+//    }
+//  }
 
   webserver {
     baseName = 'azkaban-web-server'
@@ -498,12 +502,12 @@ distributions {
     }
   }
 
-  soloserver {
-    baseName = 'azkaban-solo-server'
-    contents {
-      from { project(':azkaban-soloserver').files('build/package') }
-    }
-  }
+//  soloserver {
+//    baseName = 'azkaban-solo-server'
+//    contents {
+//      from { project(':azkaban-soloserver').files('build/package') }
+//    }
+//  }
 
   sql {
     baseName = 'azkaban-sql'
@@ -527,9 +531,10 @@ distributions {
 //      is set here so that the azkaban-common unit tests are run when running
 //      the dist tasks.
 
-migrationDistTar.dependsOn ':azkaban-common:build', ':azkaban-migration:copy'
-migrationDistTar.extension = 'tar.gz'
-migrationDistZip.dependsOn ':azkaban-common:build', ':azkaban-migration:copy'
+// remove migration
+//migrationDistTar.dependsOn ':azkaban-common:build', ':azkaban-migration:copy'
+//migrationDistTar.extension = 'tar.gz'
+//migrationDistZip.dependsOn ':azkaban-common:build', ':azkaban-migration:copy'
 
 webserverDistTar.dependsOn ':azkaban-common:build', ':azkaban-webserver:copy'
 webserverDistTar.extension = 'tar.gz'
@@ -539,16 +544,19 @@ execserverDistTar.dependsOn ':azkaban-common:build', ':azkaban-execserver:copy'
 execserverDistTar.extension = 'tar.gz'
 execserverDistZip.dependsOn ':azkaban-common:build', ':azkaban-execserver:copy'
 
-soloserverDistTar.dependsOn ':azkaban-common:build', ':azkaban-soloserver:copy'
-soloserverDistTar.extension = 'tar.gz'
-soloserverDistZip.dependsOn ':azkaban-common:build', ':azkaban-soloserver:copy'
+// remove soloserver
+//soloserverDistTar.dependsOn ':azkaban-common:build', ':azkaban-soloserver:copy'
+//soloserverDistTar.extension = 'tar.gz'
+//soloserverDistZip.dependsOn ':azkaban-common:build', ':azkaban-soloserver:copy'
 
 sqlDistTar.dependsOn ':azkaban-sql:concat'
 sqlDistTar.extension = 'tar.gz'
 sqlDistZip.dependsOn ':azkaban-sql:concat'
 
-distTar.dependsOn migrationDistTar, webserverDistTar, execserverDistTar, soloserverDistTar, sqlDistTar
-distZip.dependsOn migrationDistZip, webserverDistZip, execserverDistZip, soloserverDistZip, sqlDistZip
+//distTar.dependsOn migrationDistTar, webserverDistTar, execserverDistTar, soloserverDistTar, sqlDistTar
+//distZip.dependsOn migrationDistZip, webserverDistZip, execserverDistZip, soloserverDistZip, sqlDistZip
+distTar.dependsOn webserverDistTar, execserverDistTar, sqlDistTar
+distZip.dependsOn webserverDistZip, execserverDistZip, sqlDistZip
 
 /**
  * Gradle wrapper task.
